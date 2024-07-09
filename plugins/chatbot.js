@@ -25,6 +25,7 @@ sourceUrl: accountsgb}}},
 }
  
 if (/^bot$/i.test(m.text)) {
+ let bot = `${pickRandom([`📜 _Estoy aquí dispuesto a ayudarte._`, `🦉📜 _¡Por aquí!_`, `📜 _¡Hola! Con gusto te ayudo._`])}`.trim()
 await conn.sendPresenceUpdate('recording', m.chat)    
    }
 
