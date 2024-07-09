@@ -21,14 +21,21 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
         console.error(e)
       } finally {
 await conn.chatRead(m.chat) // Marca el chat como leído para evitar que el mensaje aparezca como reenviado
-await conn.reply(m.chat, `📜🦉 _Ya estoy haciéndolo._`, m)
+await conn.sendMessage(m.chat, `📜🦉 _Ya estoy haciéndolo._`, 'conversation', { 
+  quoted: m,
+  contextInfo: { forwardingScore: 0, isForwarded: false }
+})
+
 if (!stiker) {
+  let out
   if (/webp/g.test(mime)) out = await webp2png(img)
   else if (/image/g.test(mime)) out = await uploadImage(img)
   else if (/video/g.test(mime)) out = await uploadFile(img)
+
   if (typeof out !== 'string') out = await uploadImage(img)
   stiker = await sticker(false, out, global.packname, global.author)
 }
+
 else if (args[0]) {
       if (isUrl(args[0])) stiker = await sticker(false, args[0], global.packname, global.author)
       else return m.reply('URL invalido')
